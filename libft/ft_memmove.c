@@ -1,26 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_puthex.c                                        :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvalkama <jvalkama@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 15:51:25 by jvalkama          #+#    #+#             */
-/*   Updated: 2025/05/07 15:53:19 by jvalkama         ###   ########.fr       */
+/*   Created: 2025/04/15 15:21:44 by jvalkama          #+#    #+#             */
+/*   Updated: 2025/05/04 13:35:53 by jvalkama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_puthex(char *string, int len)
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	int	temp_len;
+	char	*temp_dest;
+	char	*temp_src;
 
-	temp_len = len;
-	while (temp_len > 0)
+	if (!dest && !src)
+		return (NULL);
+	temp_dest = (char *) dest;
+	temp_src = (char *) src;
+	if (temp_dest > temp_src)
 	{
-		write(1, &string[temp_len - 1], 1);
-		temp_len--;
+		while (n > 0)
+		{
+			temp_dest[n - 1] = temp_src[n - 1];
+			n--;
+		}
 	}
-	return (len);
+	else
+	{
+		while ((size_t)(temp_dest - (char *)dest) < n)
+			*temp_dest++ = *temp_src++;
+	}
+	return (dest);
 }

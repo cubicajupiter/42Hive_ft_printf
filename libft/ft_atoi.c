@@ -1,45 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putunsigned.c                                   :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvalkama <jvalkama@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 15:47:21 by jvalkama          #+#    #+#             */
-/*   Updated: 2025/05/07 16:30:34 by jvalkama         ###   ########.fr       */
+/*   Created: 2025/04/15 11:03:44 by jvalkama          #+#    #+#             */
+/*   Updated: 2025/04/24 14:57:40 by jvalkama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_putunsigned(unsigned int nbr)
+int	ft_atoi(const char *nptr)
 {
-	char	buffer[10];
+	int		sign;
+	int		result;
 	int		i;
-	int		j;
+	char	digit;
 
 	i = 0;
-	j = 1;
-	if (nbr == 0)
+	result = 0;
+	sign = 1;
+	while (nptr[i] == ' ' || (nptr[i] >= 9 && nptr[i] <= 13))
+		i++;
+	if (nptr[i] == '-' || nptr[i] == '+')
 	{
-		write(1, "0", 1);
-		return (1);
+		if (nptr[i] == '-')
+			sign *= -1;
+		i++;
 	}
-	while (nbr > 0)
+	while (nptr[i] >= '0' && nptr[i] <= '9' && nptr[i] != '\0')
 	{
-		buffer[i++] = (nbr % 10) + '0';
-		nbr /= 10;
+		result *= 10;
+		digit = nptr[i];
+		result += digit - '0';
+		i++;
 	}
-	while (j <= i)
-	{
-		write(1, &buffer[i - j], 1);
-		j++;
-	}
-	return (i);
+	return (result * sign);
 }
-/*
-int	main(void)
-{
-	unsigned int	nbr = 4294967295;
-	ft_putunsigned(nbr);
-}*/

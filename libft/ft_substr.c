@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_puthex.c                                        :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvalkama <jvalkama@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 15:51:25 by jvalkama          #+#    #+#             */
-/*   Updated: 2025/05/07 15:53:19 by jvalkama         ###   ########.fr       */
+/*   Created: 2025/04/17 12:48:41 by jvalkama          #+#    #+#             */
+/*   Updated: 2025/04/25 10:29:55 by jvalkama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_puthex(char *string, int len)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	int	temp_len;
+	char	*substr;
+	size_t	i;
 
-	temp_len = len;
-	while (temp_len > 0)
+	i = 0;
+	if (!s)
+		return (NULL);
+	if (start > ft_strlen(s))
+		return (ft_strdup(""));
+	if (len > ft_strlen(s + start))
+		len = ft_strlen(s + start);
+	substr = ft_calloc(len + 1, sizeof(char));
+	if (!substr)
+		return (NULL);
+	while (i < len)
 	{
-		write(1, &string[temp_len - 1], 1);
-		temp_len--;
+		substr[i] = s[start + i];
+		i++;
 	}
-	return (len);
+	return (substr);
 }

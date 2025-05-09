@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_puthex.c                                        :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvalkama <jvalkama@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 15:51:25 by jvalkama          #+#    #+#             */
-/*   Updated: 2025/05/07 15:53:19 by jvalkama         ###   ########.fr       */
+/*   Created: 2025/04/16 08:15:26 by jvalkama          #+#    #+#             */
+/*   Updated: 2025/04/28 09:24:54 by jvalkama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_puthex(char *string, int len)
+int	ft_toupper(int c)
 {
-	int	temp_len;
-
-	temp_len = len;
-	while (temp_len > 0)
-	{
-		write(1, &string[temp_len - 1], 1);
-		temp_len--;
-	}
-	return (len);
+	if (ft_isalpha(c))
+		return (c -= 32);
+	return (c);
 }

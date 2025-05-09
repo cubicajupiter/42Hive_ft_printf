@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_puthex.c                                        :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvalkama <jvalkama@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 15:51:25 by jvalkama          #+#    #+#             */
-/*   Updated: 2025/05/07 15:53:19 by jvalkama         ###   ########.fr       */
+/*   Created: 2025/04/15 15:34:23 by jvalkama          #+#    #+#             */
+/*   Updated: 2025/04/23 14:54:33 by jvalkama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_puthex(char *string, int len)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	int	temp_len;
+	unsigned long		i;
+	unsigned long		j;
 
-	temp_len = len;
-	while (temp_len > 0)
+	i = 0;
+	if (!little[i])
+		return ((char *) big);
+	while (big[i] && i < len)
 	{
-		write(1, &string[temp_len - 1], 1);
-		temp_len--;
+		j = 0;
+		while (big[i + j] == little[j] && i + j < len)
+		{
+			if (little[j + 1] == '\0')
+				return ((char *) big + i);
+			j++;
+		}
+		i++;
 	}
-	return (len);
+	return (0);
 }

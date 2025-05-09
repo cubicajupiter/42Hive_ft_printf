@@ -1,4 +1,4 @@
-r* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
@@ -10,112 +10,125 @@ r* ************************************************************************** */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf_header.h"
+#include "ft_printf.h"
 
-static int	ft_hex(uint64_t nbr, int upper, int mem)
+static int	ft_hex(uint64_t nbr, int upper, int address)
 {
 	int			len;
-	int			n;
 	const char	*base;
-	char		string[16]; //if 0x needs to be part of string, make this 18
+	char		string[18];
 	char		digit;
 
 	len = 0;
+	if (!nbr && !address)
+		string[len++] = '0';
+	if (!address)
+		nbr = (uint32_t) nbr;
 	base = "0123456789abcdef";
 	while (nbr > 0)
 	{
-		n = nbr % 16;
-		digit = base[n];
+		digit = base[nbr % 16];
 		if (upper && ft_isalpha(digit))
 			digit = ft_toupper(digit);
-		string[len] = digit;
-		nbr = nbr / 16;
-		len++;
+		string[len++] = digit;
+		nbr /= 16;
 	}
-	if (mem)
+	if (address && len)
 	{
-		write(1, "0x", 2); //might have to insert these in string if len fucked up otherwise
-		len += 2; //now this might fuck up len for    ft_puthex(); if mem   so deal with it.
+		string[len++] = 'x';
+		string[len++] = '0';
 	}
-	ft_puthex(string, len);
-	return (len);
+	return (ft_puthex(string, len));
 }
 
-static int	ft_str(void *var, int len)
+static int	ft_str(char *str)
 {
 	int	len;
 
-	len = ft_strlen(var);
-	ft_putstr_fd(var, 1);
+	if (!str)
+	{
+		len = 6;
+		ft_putstr_fd("(null)", STDOUT);
+	}
+	else
+	{
+		len = ft_strlen(str);
+		ft_putstr_fd(str, STDOUT);
+	}
 	return (len);
 }
 
 static int	ft_int(int var, int signed_integer)
 {
 	int		len;
-	char	*str;
+	char	*nbr;
 
-	len = 0
-	str = NULL;
-	if (signed_integer == NUMBER_INT)
+	len = 0;
+	nbr = NULL;
+	if (signed_integer == NBR_INT)
 	{
-		str = ft_itoa(var);
-		if (!str)
-			return (NULL);
-		ft_putstr_fd(str, 1);
-		len = ft_strlen(str);
-		free(str);
+		nbr = ft_itoa(var);
+		if (!nbr)
+			return (0);
+		ft_putstr_fd(nbr, STDOUT);
+		len = ft_strlen(nbr);
+		free(nbr);
 	}
 	else if (signed_integer == CHAR_INT)
 	{
-		ft_putchar_fd((int)var);
+		ft_putchar_fd(var, STDOUT);
 		len = 1;
 	}
 	return (len);
 }
 
-static int	ft_designator(va_list *arg_ptr, char specifier)
+static int	ft_designator(va_list *args, char specifier)
 {
+	uintptr_t	address_hex;
+
+	address_hex = 0;
 	if (specifier == 's')
-		return (ft_str(va_arg(args, char *)));
+		return (ft_str(va_arg(*args, char *)));
 	else if (specifier == 'p')
-		return (ft_hex((uintptr_t)va_arg(args, void *), LOWER, ADDRESS_HEX));
-	else if (specifier == 'u')
-		return (ft_putunsigned(va_arg(args, unsigned int)));
-	else if	(specifier == 'c')
-		return (ft_int(va_arg(args, int), CHAR_INT));
-	else if (specifier == 'd' || specifier == 'i')
-		return (ft_int(va_arg(args, int), NBR_INT));
-	else if (specifier == 'x')
-		return (ft_hex(va_arg(args, int), LOWER, HEX));
-	else if (specifier == 'X')
-		return (ft_hex(va_arg(args, int), UPPER,  HEX));
-	else if (specifier == '%')
 	{
-		ft_putchar('%', 1);
-		return (1);
+		address_hex = (uintptr_t)va_arg(*args, void *);
+		if (address_hex != 0)
+			return (ft_hex(address_hex, LOWER, ADDRESS_HEX));
+		write(1, "(nil)", 5);
+		return (5);
 	}
+	else if (specifier == 'u')
+		return (ft_putunsigned(va_arg(*args, unsigned int)));
+	else if	(specifier == 'c')
+		return (ft_int(va_arg(*args, int), CHAR_INT));
+	else if (specifier == 'd' || specifier == 'i')
+		return (ft_int(va_arg(*args, int), NBR_INT));
+	else if (specifier == 'x')
+		return (ft_hex(va_arg(*args, int), LOWER, HEX));
+	else if (specifier == 'X')
+		return (ft_hex(va_arg(*args, int), UPPER,  HEX));
+	else if (specifier == '%')
+		return (ft_int('%', CHAR_INT));
+	return (0);
 }
 
 int	ft_printf(const char *format, ...)
 {
 	va_list	args;
-	va_list	*ap;
 	int		count;
 
-	count = 0;
 	if (!format || *format == '\0')
-		return (count);
+		return (0);
+	count = 0;
 	va_start(args, format);
-	*ap = &args;
 	while(*format)
 	{
-		if (*format == '%' && ft_strchr("cspdiuxX%", *(format + 1))) //error handling for invalid specifiers?
+		if (*format == '%' && ft_strchr("cspdiuxX%", *(format + 1)))
 		{
-			count += ft_designate(ap, *++format);
+			count += ft_designator(&args, *++format);
 			format++;
 		}
-		else if (*format)
+		else
 		{
 			count++;
 			write(1, format++, 1);

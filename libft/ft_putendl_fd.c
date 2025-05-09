@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_puthex.c                                        :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvalkama <jvalkama@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 15:51:25 by jvalkama          #+#    #+#             */
-/*   Updated: 2025/05/07 15:53:19 by jvalkama         ###   ########.fr       */
+/*   Created: 2025/04/17 12:54:08 by jvalkama          #+#    #+#             */
+/*   Updated: 2025/05/04 12:19:39 by jvalkama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_puthex(char *string, int len)
+void	ft_putendl_fd(char *s, int fd)
 {
-	int	temp_len;
+	int	i;
 
-	temp_len = len;
-	while (temp_len > 0)
+	i = 0;
+	while (s[i])
 	{
-		write(1, &string[temp_len - 1], 1);
-		temp_len--;
+		write(fd, &s[i], 1);
+		i++;
 	}
-	return (len);
+	write(fd, "\n", 1);
 }

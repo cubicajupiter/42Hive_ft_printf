@@ -1,26 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_puthex.c                                        :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvalkama <jvalkama@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 15:51:25 by jvalkama          #+#    #+#             */
-/*   Updated: 2025/05/07 15:53:19 by jvalkama         ###   ########.fr       */
+/*   Created: 2025/04/17 12:51:23 by jvalkama          #+#    #+#             */
+/*   Updated: 2025/05/04 12:05:53 by jvalkama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_puthex(char *string, int len)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int	temp_len;
+	char	*newstr;
+	size_t	s1_len;
+	size_t	s2_len;
 
-	temp_len = len;
-	while (temp_len > 0)
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	newstr = ft_calloc(s1_len + s2_len + 1, sizeof(char));
+	if (!newstr)
+		return (NULL);
+	while (*s1)
 	{
-		write(1, &string[temp_len - 1], 1);
-		temp_len--;
+		*(newstr)++ = *(s1)++;
 	}
-	return (len);
+	while (*s2)
+	{
+		*(newstr)++ = *(s2)++;
+	}
+	*newstr = '\0';
+	return (newstr - (s1_len + s2_len));
 }

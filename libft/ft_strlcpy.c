@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_puthex.c                                        :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvalkama <jvalkama@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 15:51:25 by jvalkama          #+#    #+#             */
-/*   Updated: 2025/05/07 15:53:19 by jvalkama         ###   ########.fr       */
+/*   Created: 2025/04/15 15:23:44 by jvalkama          #+#    #+#             */
+/*   Updated: 2025/04/25 10:27:32 by jvalkama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_puthex(char *string, int len)
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	int	temp_len;
+	size_t	srclen;
 
-	temp_len = len;
-	while (temp_len > 0)
+	srclen = ft_strlen(src);
+	if (srclen + 1 < size)
+		ft_memcpy(dst, src, srclen + 1);
+	else if (size != 0)
 	{
-		write(1, &string[temp_len - 1], 1);
-		temp_len--;
+		ft_memcpy(dst, src, size - 1);
+		dst[size - 1] = 0;
 	}
-	return (len);
+	return (srclen);
 }

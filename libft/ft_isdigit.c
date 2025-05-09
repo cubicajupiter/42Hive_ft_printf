@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_puthex.c                                        :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvalkama <jvalkama@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 15:51:25 by jvalkama          #+#    #+#             */
-/*   Updated: 2025/05/07 15:53:19 by jvalkama         ###   ########.fr       */
+/*   Created: 2025/04/15 11:40:30 by jvalkama          #+#    #+#             */
+/*   Updated: 2025/04/28 09:11:28 by jvalkama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_puthex(char *string, int len)
+int	ft_isdigit(int c)
 {
-	int	temp_len;
-
-	temp_len = len;
-	while (temp_len > 0)
-	{
-		write(1, &string[temp_len - 1], 1);
-		temp_len--;
-	}
-	return (len);
+	return (c >= '0' && c <= '9');
 }

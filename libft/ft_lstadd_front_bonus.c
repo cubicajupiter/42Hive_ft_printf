@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_puthex.c                                        :+:      :+:    :+:   */
+/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvalkama <jvalkama@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 15:51:25 by jvalkama          #+#    #+#             */
-/*   Updated: 2025/05/07 15:53:19 by jvalkama         ###   ########.fr       */
+/*   Created: 2025/05/02 16:27:07 by jvalkama          #+#    #+#             */
+/*   Updated: 2025/05/02 16:39:23 by jvalkama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_puthex(char *string, int len)
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	int	temp_len;
-
-	temp_len = len;
-	while (temp_len > 0)
-	{
-		write(1, &string[temp_len - 1], 1);
-		temp_len--;
-	}
-	return (len);
+	new->next = *lst;
+	*lst = new;
 }

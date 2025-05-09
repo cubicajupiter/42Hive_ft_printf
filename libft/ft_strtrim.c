@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_puthex.c                                        :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvalkama <jvalkama@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 15:51:25 by jvalkama          #+#    #+#             */
-/*   Updated: 2025/05/07 15:53:19 by jvalkama         ###   ########.fr       */
+/*   Created: 2025/04/17 12:51:39 by jvalkama          #+#    #+#             */
+/*   Updated: 2025/05/04 12:02:55 by jvalkama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_puthex(char *string, int len)
+char	*ft_strtrim(char const *s1, char const *set)
 {
-	int	temp_len;
+	size_t			len;
+	unsigned int	i;
+	unsigned int	j;
 
-	temp_len = len;
-	while (temp_len > 0)
-	{
-		write(1, &string[temp_len - 1], 1);
-		temp_len--;
-	}
-	return (len);
+	len = ft_strlen(s1);
+	if (len == 0)
+		return (ft_strdup(""));
+	i = 0;
+	j = len - 1;
+	while (ft_strchr(set, s1[i]) && i < len)
+		i++;
+	while (ft_strchr(set, s1[j]) && i < j)
+		j--;
+	return (ft_substr(s1, i, (j - i + 1)));
 }

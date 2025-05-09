@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_puthex.c                                        :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvalkama <jvalkama@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 15:51:25 by jvalkama          #+#    #+#             */
-/*   Updated: 2025/05/07 15:53:19 by jvalkama         ###   ########.fr       */
+/*   Created: 2025/04/16 09:29:10 by jvalkama          #+#    #+#             */
+/*   Updated: 2025/05/04 11:20:47 by jvalkama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_puthex(char *string, int len)
+char	*ft_strchr(const char *s, int c)
 {
-	int	temp_len;
+	char	cc;
 
-	temp_len = len;
-	while (temp_len > 0)
+	cc = (char) c;
+	while (*s != '\0')
 	{
-		write(1, &string[temp_len - 1], 1);
-		temp_len--;
+		if (*s == cc)
+			return ((char *) s);
+		s++;
 	}
-	return (len);
+	if (*s == cc)
+		return ((char *) s);
+	return (NULL);
 }

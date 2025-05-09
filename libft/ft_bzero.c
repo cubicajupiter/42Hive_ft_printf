@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_puthex.c                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvalkama <jvalkama@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 15:51:25 by jvalkama          #+#    #+#             */
-/*   Updated: 2025/05/07 15:53:19 by jvalkama         ###   ########.fr       */
+/*   Created: 2025/04/15 15:12:05 by jvalkama          #+#    #+#             */
+/*   Updated: 2025/04/24 15:12:56 by jvalkama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_puthex(char *string, int len)
+void	ft_bzero(void *s, size_t n)
 {
-	int	temp_len;
+	size_t	i;
+	char	*temp_ptr;
 
-	temp_len = len;
-	while (temp_len > 0)
+	i = 0;
+	temp_ptr = (char *) s;
+	while (i < n)
 	{
-		write(1, &string[temp_len - 1], 1);
-		temp_len--;
+		temp_ptr[i] = '\0';
+		i++;
 	}
-	return (len);
 }

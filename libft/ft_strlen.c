@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_puthex.c                                        :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvalkama <jvalkama@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 15:51:25 by jvalkama          #+#    #+#             */
-/*   Updated: 2025/05/07 15:53:19 by jvalkama         ###   ########.fr       */
+/*   Created: 2025/04/15 14:48:14 by jvalkama          #+#    #+#             */
+/*   Updated: 2025/04/23 15:53:47 by jvalkama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_puthex(char *string, int len)
+size_t	ft_strlen(const char *str)
 {
-	int	temp_len;
+	size_t	s;
 
-	temp_len = len;
-	while (temp_len > 0)
+	s = 0;
+	while (str[s] != '\0')
 	{
-		write(1, &string[temp_len - 1], 1);
-		temp_len--;
+		s++;
 	}
-	return (len);
+	return (s);
 }

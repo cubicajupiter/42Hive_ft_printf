@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_puthex.c                                        :+:      :+:    :+:   */
+/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvalkama <jvalkama@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 15:51:25 by jvalkama          #+#    #+#             */
-/*   Updated: 2025/05/07 15:53:19 by jvalkama         ###   ########.fr       */
+/*   Created: 2025/05/03 09:39:30 by jvalkama          #+#    #+#             */
+/*   Updated: 2025/05/04 12:16:53 by jvalkama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_puthex(char *string, int len)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	int	temp_len;
+	t_list	*current;
+	t_list	*next;
 
-	temp_len = len;
-	while (temp_len > 0)
+	current = *lst;
+	while (current)
 	{
-		write(1, &string[temp_len - 1], 1);
-		temp_len--;
+		next = current->next;
+		del(current->content);
+		free(current);
+		current = next;
 	}
-	return (len);
+	*lst = NULL;
 }

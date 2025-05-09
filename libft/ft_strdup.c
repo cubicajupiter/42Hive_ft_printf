@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_puthex.c                                        :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvalkama <jvalkama@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 15:51:25 by jvalkama          #+#    #+#             */
-/*   Updated: 2025/05/07 15:53:19 by jvalkama         ###   ########.fr       */
+/*   Created: 2025/04/17 10:18:56 by jvalkama          #+#    #+#             */
+/*   Updated: 2025/05/04 11:38:06 by jvalkama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_puthex(char *string, int len)
+char	*ft_strdup(const char *s)
 {
-	int	temp_len;
+	size_t		len;
+	size_t		i;
+	char		*copy;
 
-	temp_len = len;
-	while (temp_len > 0)
+	i = 0;
+	len = ft_strlen(s);
+	copy = (char *) malloc(len + 1);
+	if (!copy)
+		return (NULL);
+	while (*s != '\0')
 	{
-		write(1, &string[temp_len - 1], 1);
-		temp_len--;
+		copy[i] = *(s)++;
+		i++;
 	}
-	return (len);
+	copy[i] = '\0';
+	return (copy);
 }

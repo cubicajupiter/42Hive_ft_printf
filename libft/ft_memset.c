@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_puthex.c                                        :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jvalkama <jvalkama@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 15:51:25 by jvalkama          #+#    #+#             */
-/*   Updated: 2025/05/07 15:53:19 by jvalkama         ###   ########.fr       */
+/*   Created: 2025/04/15 14:57:17 by jvalkama          #+#    #+#             */
+/*   Updated: 2025/04/25 10:25:56 by jvalkama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_puthex(char *string, int len)
+void	*ft_memset(void *str, int c, size_t n)
 {
-	int	temp_len;
+	unsigned char	*temp;
 
-	temp_len = len;
-	while (temp_len > 0)
+	temp = (unsigned char *) str;
+	while (n > 0)
 	{
-		write(1, &string[temp_len - 1], 1);
-		temp_len--;
+		*(temp++) = (unsigned char) c;
+		n--;
 	}
-	return (len);
+	return (str);
 }
