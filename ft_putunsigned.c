@@ -37,9 +37,3 @@ int	ft_putunsigned(unsigned int nbr)
 	}
 	return (i);
 }
-/*
-int	main(void)
-{
-	unsigned int	nbr = 4294967295;
-	ft_putunsigned(nbr);
-}*/

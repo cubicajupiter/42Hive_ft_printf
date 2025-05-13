@@ -6,53 +6,49 @@
 #    By: jvalkama <jvalkama@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/08 12:19:53 by jvalkama          #+#    #+#              #
-#    Updated: 2025/05/08 14:25:26 by jvalkama         ###   ########.fr        #
+#    Updated: 2025/05/13 15:29:53 by jvalkama         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS			= ft_printf.c ft_puthex.c ft_putunsigned.c
+NAME			= libftprintf.a
 
+SRCS			= ft_printf.c ft_puthex.c ft_putunsigned.c
 OBJS			= $(SRCS:%.c=%.o)
 
-HEADER			= ft_printf_header.h
+HEADER			= ft_printf.h
 
-LIBFT_H			= $(LIBFT_PATH)/libft.h
-
+LIBFT_A			= $(LIBFT_PATH)/libft.a
 LIBFT_PATH		= libft
 
-CC				= cc
-
-CFLAGS			= -Wall -Wextra -Werror -I $(LIBFT_PATH)
+COMPILER		= cc
+CFLAGS			= -Wall -Wextra -Werror
+INCLUDE			= -I $(LIBFT_PATH)
 
 RM				= rm -f
 
-NAME			= libftprintf.a
+all:			$(NAME)
 
-all:			sub-make copy-libft $(NAME)
+$(LIBFT_A):
+				make -C $(LIBFT_PATH)
 
-copy-libft:		
-				@echo "Moving and renaming libft.a to parent dir"
-				mv libft/libft.a libftprintf.a
-
-$(NAME):		$(OBJS)
-					@echo "Creating library $(NAME)"
+$(NAME):		$(OBJS) $(LIBFT_A)
+					cp $(LIBFT_A) $(NAME)
 					ar -rcs $(NAME) $(OBJS)
 
-%.o:			%.c $(HEADER) $(LIBFT_H)
+%.o:			%.c $(HEADER)
 					@echo "Compiling $<"
-					$(CC) $(CFLAGS) -c $< -o $@
-
-sub-make:
-					make -C $(LIBFT_PATH)
+					$(COMPILER) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 clean:
-					@echo "Cleaning object files"
+					@echo "Cleaning object files in parent and libft"
 					@$(RM) $(OBJS)
+					make clean -C $(LIBFT_PATH)
 
 fclean:			clean
-					@echo "Cleaning library"
+					@echo "Cleaning library in parent and libft"
 					@$(RM) $(NAME)
+					make fclean -C $(LIBFT_PATH)
 
 re:				fclean all
 
-.PHONY: all clean fclean re sub-make copy_libft
+.PHONY: all clean fclean re
